@@ -16,4 +16,6 @@ const COLORS = {
   LIGHT_COLOR: "#F3F3F3",
 };
 
-export { LINKS, COLORS };
+const MIN_INNER_WIDTH = 968;
+
+export { LINKS, COLORS, MIN_INNER_WIDTH };

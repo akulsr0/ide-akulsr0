@@ -4,7 +4,7 @@ import map from "lodash/map";
 import CodeEditor from "@monaco-editor/react";
 import { AppContext } from "../context";
 import { EDITOR_STYLES } from "../styles";
-import { LINKS } from "../constants";
+import { LINKS, MIN_INNER_WIDTH } from "../constants";
 
 const Editor = () => {
   const {
@@ -31,7 +31,12 @@ const Editor = () => {
   ));
 
   return (
-    <div style={EDITOR_STYLES.wrapper}>
+    <div
+      style={{
+        ...EDITOR_STYLES.wrapper,
+        width: window.innerWidth > MIN_INNER_WIDTH ? "unset" : "100%",
+      }}
+    >
       <div style={EDITOR_STYLES.topbar}>
         <div style={EDITOR_STYLES.topbarLeft}>
           <span style={EDITOR_STYLES.topbarTitle}>
