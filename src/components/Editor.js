@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useRef, useContext } from "react";
 import capitalize from "lodash/capitalize";
 import map from "lodash/map";
 import CodeEditor from "@monaco-editor/react";
@@ -7,8 +7,16 @@ import { EDITOR_STYLES } from "../styles";
 import { LINKS } from "../constants";
 
 const Editor = () => {
-  const { inputCode, setInputCode, language, setLanguage } =
-    useContext(AppContext);
+  const {
+    inputCode,
+    setInputCode,
+    language,
+    setLanguage,
+    isDarkMode,
+    setIsDarkMode,
+  } = useContext(AppContext);
+
+  const darkModeCheckboxRef = useRef(null);
 
   const icons = map(LINKS, (link) => (
     <a
@@ -32,6 +40,15 @@ const Editor = () => {
           {icons}
         </div>
         <div>
+          <span>Dark Mode: </span>
+          <label className="switch">
+            <input
+              ref={darkModeCheckboxRef}
+              type="checkbox"
+              onClick={() => setIsDarkMode(darkModeCheckboxRef.current.checked)}
+            />
+            <span className="slider"></span>
+          </label>
           <span>Language: </span>
           <select onChange={(e) => setLanguage(e.target.value)}>
             <option value="javascript">Javascript</option>
@@ -42,7 +59,7 @@ const Editor = () => {
       <CodeEditor
         height="100%"
         language={language}
-        theme="vs-light"
+        theme={isDarkMode ? "vs-dark" : "vs-light"}
         options={{ fontSize: 16 }}
         defaultValue={inputCode}
         onChange={(val) => setInputCode(val)}

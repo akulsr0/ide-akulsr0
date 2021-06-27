@@ -11,4 +11,9 @@ const LINKS = [
   },
 ];
 
-export { LINKS };
+const COLORS = {
+  DARK_COLOR: "#2E2E2E",
+  LIGHT_COLOR: "#F3F3F3",
+};
+
+export { LINKS, COLORS };
