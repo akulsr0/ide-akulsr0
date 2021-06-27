@@ -12,6 +12,7 @@ const Editor = () => {
 
   const icons = map(LINKS, (link) => (
     <a
+      key={link.alt}
       href={link.url}
       style={EDITOR_STYLES.link}
       rel="noreferrer"
@@ -34,6 +35,7 @@ const Editor = () => {
           <span>Language: </span>
           <select onChange={(e) => setLanguage(e.target.value)}>
             <option value="javascript">Javascript</option>
+            {/* <option value="python">Python</option> */}
           </select>
         </div>
       </div>

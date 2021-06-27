@@ -1,28 +1,50 @@
-import isObject from "lodash/isObject";
 import isFunction from "lodash/isFunction";
-import isBoolean from "lodash/isBoolean";
+import map from "lodash/map";
+import join from "lodash/join";
 
 const getJSOutput = (code) => {
+  // Original console.log
+  const _log = console.log;
+
+  // Logs Array: To Preserve Logs
+  const logs = [];
+
+  // Update console.log to return preserved logged string
+  console.log = (...values) => {
+    // Log value in console
+    values.forEach((val) => _log(val));
+    // Array of values logged
+    const outputArray = map(values, (val) => {
+      if (isFunction(val)) {
+        return `Function ${val.name}`;
+      }
+      return JSON.stringify(val);
+    });
+    // Logged String
+    const outputString = join(outputArray, " ");
+    // Complete logs including previous logs
+    logs.push(outputString);
+  };
+
   try {
     // eslint-disable-next-line no-eval
-    const _output = eval(code);
-    if (isBoolean(_output))
-      return _output
-        ? { result: "true", isError: false }
-        : { result: "false", isError: false };
-    if (isFunction(_output)) return { result: _output.name, isError: false };
-    if (isObject(_output))
-      return { result: JSON.stringify(_output), isError: false };
-    return { result: _output, isError: false };
+    eval(code);
+    return { result: logs, isError: false };
   } catch (e) {
-    return { result: e.message, isError: true };
+    return { result: [e.message], isError: true };
   }
+};
+
+const getPythonOutput = (code) => {
+  return { result: code, isError: false };
 };
 
 const getOutput = (code, language) => {
   switch (language) {
     case "javascript":
       return getJSOutput(code);
+    case "python":
+      return getPythonOutput(code);
     default:
       return getJSOutput(code);
   }

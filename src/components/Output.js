@@ -5,7 +5,7 @@ import { getOutput } from "../utils/output";
 
 const Output = () => {
   const { inputCode, language } = useContext(AppContext);
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState([]);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,12 @@ const Output = () => {
 
   return (
     <div style={OUTPUT_STYLES.wrapper}>
-      <span style={{ fontSize: 20, color: isError && "red" }}>{output}</span>
+      {output.map((o) => (
+        <>
+          <span style={{ fontSize: 20, color: isError && "red" }}>{o}</span>
+          <br />
+        </>
+      ))}
     </div>
   );
 };
