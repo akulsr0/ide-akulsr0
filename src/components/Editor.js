@@ -19,6 +19,7 @@ const Editor = () => {
         height="100%"
         language={language}
         theme="vs-light"
+        options={{ fontSize: 16 }}
         defaultValue={inputCode}
         onChange={(val) => setInputCode(val)}
       />

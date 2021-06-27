@@ -16,7 +16,7 @@ const Output = () => {
 
   return (
     <div style={OUTPUT_STYLES.wrapper}>
-      <span style={{ color: isError && "red" }}>{output}</span>
+      <span style={{ fontSize: 20, color: isError && "red" }}>{output}</span>
     </div>
   );
 };
