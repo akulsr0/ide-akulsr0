@@ -5,7 +5,27 @@ const EDITOR_STYLES = {
     height: "100vh",
   },
   topbar: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "row",
     padding: 10,
+  },
+  topbarLeft: {
+    flex: 1,
+    display: "flex",
+    alignItems: "center",
+  },
+  topbarTitle: {
+    fontWeight: 700,
+    userSelect: "none",
+  },
+  link: {
+    marginLeft: 10,
+  },
+  iconImage: {
+    width: 24,
+    height: 24,
+    userSelect: "none",
   },
 };
 
