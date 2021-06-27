@@ -13,6 +13,7 @@ const OUTPUT_STYLES = {
   wrapper: {
     height: "100vh",
     backgroundColor: "#f3f3f3",
+    padding: 10,
   },
 };
 

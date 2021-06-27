@@ -4,17 +4,19 @@ import { OUTPUT_STYLES } from "../styles";
 import { getOutput } from "../utils/output";
 
 const Output = () => {
-  const { inputCode } = useContext(AppContext);
+  const { inputCode, language } = useContext(AppContext);
   const [output, setOutput] = useState("");
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const result = getOutput(inputCode);
+    const { result, isError: _isError } = getOutput(inputCode, language);
     setOutput(result);
-  }, [inputCode]);
+    setIsError(_isError);
+  }, [inputCode, language]);
 
   return (
     <div style={OUTPUT_STYLES.wrapper}>
-      <span>{output}</span>
+      <span style={{ color: isError && "red" }}>{output}</span>
     </div>
   );
 };
