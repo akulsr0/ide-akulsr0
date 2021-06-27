@@ -37,7 +37,12 @@ const Editor = () => {
         width: window.innerWidth > MIN_INNER_WIDTH ? "unset" : "100%",
       }}
     >
-      <div style={EDITOR_STYLES.topbar}>
+      <div
+        style={{
+          ...EDITOR_STYLES.topbar,
+          flexDirection: window.innerWidth > MIN_INNER_WIDTH ? "row" : "column",
+        }}
+      >
         <div style={EDITOR_STYLES.topbarLeft}>
           <span style={EDITOR_STYLES.topbarTitle}>
             {capitalize(language)} Playgrounds
