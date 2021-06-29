@@ -46,7 +46,7 @@ const Editor = () => {
         <div style={EDITOR_STYLES.topbarLeft}>
           <span style={EDITOR_STYLES.topbarTitle}>
             {capitalize(language)}
-            &nbsp;Playground
+            &nbsp;&nbsp;Playground
           </span>
           {icons}
         </div>
