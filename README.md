@@ -3,5 +3,5 @@
 ### Languages Supported:
 
 - [x] Javascript
-- [ ] Typescript
+- [x] Typescript
 - [ ] Python

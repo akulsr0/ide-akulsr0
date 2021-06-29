@@ -1,10 +1,10 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from 'react';
 
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
-  const [language, setLanguage] = useState("javascript");
-  const [inputCode, setInputCode] = useState("");
+  const [language, setLanguage] = useState('javascript');
+  const [inputCode, setInputCode] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
   return (
     <AppContext.Provider

@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../context";
-import { OUTPUT_STYLES } from "../styles";
-import { getOutput } from "../utils/output";
-import { COLORS } from "../constants";
+import React, { useContext, useEffect, useState } from 'react';
+import map from 'lodash/map';
+import { AppContext } from '../context';
+import { OUTPUT_STYLES } from '../styles';
+import { getOutput } from '../utils/output';
+import { COLORS } from '../constants';
 
 const Output = () => {
   const { inputCode, language, isDarkMode } = useContext(AppContext);
@@ -23,9 +24,9 @@ const Output = () => {
         color: isDarkMode ? COLORS.LIGHT_COLOR : COLORS.DARK_COLOR,
       }}
     >
-      {output.map((o, i) => (
-        <div key={i}>
-          <span style={{ fontSize: 20, color: isError && "red" }}>{o}</span>
+      {map(output, (out, index) => (
+        <div key={index}>
+          <span style={{ fontSize: 20, color: isError && 'red' }}>{out}</span>
           <br />
         </div>
       ))}

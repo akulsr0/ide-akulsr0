@@ -1,23 +1,23 @@
 const EDITOR_STYLES = {
   wrapper: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
   },
   topbar: {
     flex: 1,
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     padding: 10,
   },
   topbarLeft: {
     flex: 1,
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   },
   topbarTitle: {
     fontWeight: 700,
-    userSelect: "none",
+    userSelect: 'none',
   },
   link: {
     marginLeft: 10,
@@ -25,14 +25,14 @@ const EDITOR_STYLES = {
   iconImage: {
     width: 24,
     height: 24,
-    userSelect: "none",
+    userSelect: 'none',
   },
 };
 
 const OUTPUT_STYLES = {
   wrapper: {
-    height: "100vh",
-    backgroundColor: "#f3f3f3",
+    height: '100vh',
+    backgroundColor: '#f3f3f3',
     padding: 10,
   },
 };

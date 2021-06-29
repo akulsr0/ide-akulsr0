@@ -1,6 +1,8 @@
 import isFunction from "lodash/isFunction";
+import isEmpty from "lodash/isEmpty";
 import map from "lodash/map";
 import join from "lodash/join";
+import * as typescript from "typescript";
 
 const getJSOutput = (code) => {
   // Original console.log
@@ -35,6 +37,27 @@ const getJSOutput = (code) => {
   }
 };
 
+const getTSOutput = (code) => {
+  const options = {
+    compilerOptions: {
+      module: typescript.ModuleKind.CommonJS,
+    },
+    reportDiagnostics: true,
+  };
+  const transpiledCode = typescript.transpileModule(code, options);
+
+  if (isEmpty(transpiledCode?.diagnostics)) {
+    const jsoutput = getJSOutput(transpiledCode?.outputText);
+    return jsoutput;
+  } else {
+    const errorMessage = map(
+      transpiledCode?.diagnostics,
+      (error) => `Error: ${error.messageText}`
+    );
+    return { result: [errorMessage], isError: true };
+  }
+};
+
 const getPythonOutput = (code) => {
   return { result: code, isError: false };
 };
@@ -43,6 +66,8 @@ const getOutput = (code, language) => {
   switch (language) {
     case "javascript":
       return getJSOutput(code);
+    case "typescript":
+      return getTSOutput(code);
     case "python":
       return getPythonOutput(code);
     default:

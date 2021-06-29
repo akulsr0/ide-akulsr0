@@ -1,10 +1,10 @@
-import { useRef, useContext } from "react";
-import capitalize from "lodash/capitalize";
-import map from "lodash/map";
-import CodeEditor from "@monaco-editor/react";
-import { AppContext } from "../context";
-import { EDITOR_STYLES } from "../styles";
-import { LINKS, MIN_INNER_WIDTH } from "../constants";
+import React, { useRef, useContext } from 'react';
+import capitalize from 'lodash/capitalize';
+import map from 'lodash/map';
+import CodeEditor from '@monaco-editor/react';
+import { AppContext } from '../context';
+import { EDITOR_STYLES } from '../styles';
+import { LINKS, MIN_INNER_WIDTH } from '../constants';
 
 const Editor = () => {
   const {
@@ -34,34 +34,37 @@ const Editor = () => {
     <div
       style={{
         ...EDITOR_STYLES.wrapper,
-        width: window.innerWidth > MIN_INNER_WIDTH ? "unset" : "100%",
+        width: window.innerWidth > MIN_INNER_WIDTH ? 'unset' : '100%',
       }}
     >
       <div
         style={{
           ...EDITOR_STYLES.topbar,
-          flexDirection: window.innerWidth > MIN_INNER_WIDTH ? "row" : "column",
+          flexDirection: window.innerWidth > MIN_INNER_WIDTH ? 'row' : 'column',
         }}
       >
         <div style={EDITOR_STYLES.topbarLeft}>
           <span style={EDITOR_STYLES.topbarTitle}>
-            {capitalize(language)} Playgrounds
+            {capitalize(language)}
+            &nbsp;Playgrounds
           </span>
           {icons}
         </div>
         <div>
           <span>Dark Mode: </span>
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label className="switch">
             <input
               ref={darkModeCheckboxRef}
               type="checkbox"
               onClick={() => setIsDarkMode(darkModeCheckboxRef.current.checked)}
             />
-            <span className="slider"></span>
+            <span className="slider" />
           </label>
           <span>Language: </span>
           <select onChange={(e) => setLanguage(e.target.value)}>
             <option value="javascript">Javascript</option>
+            <option value="typescript">Typescript</option>
             {/* <option value="python">Python</option> */}
           </select>
         </div>
@@ -69,7 +72,7 @@ const Editor = () => {
       <CodeEditor
         height="100%"
         language={language}
-        theme={isDarkMode ? "vs-dark" : "vs-light"}
+        theme={isDarkMode ? 'vs-dark' : 'vs-light'}
         options={{ fontSize: 16 }}
         defaultValue={inputCode}
         onChange={(val) => setInputCode(val)}
