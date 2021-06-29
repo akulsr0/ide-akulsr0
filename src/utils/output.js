@@ -1,8 +1,9 @@
-import isFunction from "lodash/isFunction";
-import isEmpty from "lodash/isEmpty";
-import map from "lodash/map";
-import join from "lodash/join";
-import * as typescript from "typescript";
+import isFunction from 'lodash/isFunction';
+import isEmpty from 'lodash/isEmpty';
+import map from 'lodash/map';
+import join from 'lodash/join';
+// eslint-disable-next-line
+import * as typescript from 'typescript';
 
 const getJSOutput = (code) => {
   // Original console.log
@@ -23,7 +24,7 @@ const getJSOutput = (code) => {
       return JSON.stringify(val);
     });
     // Logged String
-    const outputString = join(outputArray, " ");
+    const outputString = join(outputArray, ' ');
     // Complete logs including previous logs
     logs.push(outputString);
   };
@@ -49,26 +50,26 @@ const getTSOutput = (code) => {
   if (isEmpty(transpiledCode?.diagnostics)) {
     const jsoutput = getJSOutput(transpiledCode?.outputText);
     return jsoutput;
-  } else {
-    const errorMessage = map(
-      transpiledCode?.diagnostics,
-      (error) => `Error: ${error.messageText}`
-    );
-    return { result: [errorMessage], isError: true };
   }
+  const errorMessage = map(
+    transpiledCode?.diagnostics,
+    (error) => `Error: ${error.messageText}`,
+  );
+  return { result: [errorMessage], isError: true };
 };
 
 const getPythonOutput = (code) => {
-  return { result: code, isError: false };
+  const result = { result: code, isError: false };
+  return result;
 };
 
 const getOutput = (code, language) => {
   switch (language) {
-    case "javascript":
+    case 'javascript':
       return getJSOutput(code);
-    case "typescript":
+    case 'typescript':
       return getTSOutput(code);
-    case "python":
+    case 'python':
       return getPythonOutput(code);
     default:
       return getJSOutput(code);
@@ -76,3 +77,4 @@ const getOutput = (code, language) => {
 };
 
 export { getOutput };
+export default { getOutput };
