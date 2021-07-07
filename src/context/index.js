@@ -7,6 +7,7 @@ const AppContextProvider = ({ children }) => {
   const [language, setLanguage] = useState('javascript');
   const [inputCode, setInputCode] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
+
   return (
     <AppContext.Provider
       value={{

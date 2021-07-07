@@ -27,6 +27,9 @@ const EDITOR_STYLES = {
     height: 24,
     userSelect: 'none',
   },
+  shareLink: {
+    cursor: 'pointer',
+  },
 };
 
 const OUTPUT_STYLES = {

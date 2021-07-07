@@ -1,12 +1,14 @@
-import React, { useRef, useContext } from 'react';
-import capitalize from 'lodash/capitalize';
+import React, { useEffect, useRef, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import map from 'lodash/map';
 import CodeEditor from '@monaco-editor/react';
+import useClippy from 'use-clippy';
 import { AppContext } from '../context';
 import { EDITOR_STYLES } from '../styles';
 import { LINKS, MIN_INNER_WIDTH } from '../constants';
+import { fetchLinkData, shareLink } from '../utils';
 
-const Editor = () => {
+const Editor = ({ codeSnippetId }) => {
   const {
     inputCode,
     setInputCode,
@@ -17,6 +19,41 @@ const Editor = () => {
   } = useContext(AppContext);
 
   const darkModeCheckboxRef = useRef(null);
+  const [isCreatingLink, setIsCreatingLink] = useState(false);
+  const [, setClipboard] = useClippy();
+
+  useEffect(() => {
+    if (codeSnippetId) {
+      fetchLinkData(codeSnippetId, (err, data) => {
+        if (err) {
+          window.alert('Link is not valid');
+          return;
+        }
+        setInputCode(data.code_snippet);
+        setIsDarkMode(data.is_dark_theme);
+        setLanguage(data.language);
+      });
+    }
+  }, []);
+
+  const onPressShareLink = () => {
+    if (isCreatingLink) {
+      window.alert('Already creating link, please wait!');
+      return;
+    }
+    setIsCreatingLink(true);
+    const payload = { language, isDarkMode, inputCode };
+    shareLink(payload, (err, data) => {
+      setIsCreatingLink(false);
+      if (data) {
+        const newLink = `https://ide.akul.codes/${data.id}`;
+        setClipboard(newLink);
+        window.alert(
+          `Your link is created and copied to clipboard\n ${newLink}`,
+        );
+      }
+    });
+  };
 
   const icons = map(LINKS, (link) => (
     <a
@@ -44,10 +81,7 @@ const Editor = () => {
         }}
       >
         <div style={EDITOR_STYLES.topbarLeft}>
-          <span style={EDITOR_STYLES.topbarTitle}>
-            {capitalize(language)}
-            &nbsp;Playground
-          </span>
+          <span style={EDITOR_STYLES.topbarTitle}>Code Playgrounds</span>
           {icons}
         </div>
         <div>
@@ -57,16 +91,31 @@ const Editor = () => {
             <input
               ref={darkModeCheckboxRef}
               type="checkbox"
-              onClick={() => setIsDarkMode(darkModeCheckboxRef.current.checked)}
+              checked={isDarkMode}
+              onChange={() => {
+                setIsDarkMode(darkModeCheckboxRef.current.checked);
+              }}
             />
             <span className="slider" />
           </label>
           <span>Language: </span>
-          <select onChange={(e) => setLanguage(e.target.value)}>
+          <select
+            onChange={(e) => setLanguage(e.target.value)}
+            value={language.toLowerCase()}
+          >
             <option value="javascript">Javascript</option>
             <option value="typescript">Typescript</option>
             {/* <option value="python">Python</option> */}
           </select>
+          &nbsp;
+          <button
+            type="button"
+            style={EDITOR_STYLES.shareLink}
+            onClick={onPressShareLink}
+            disabled={isCreatingLink}
+          >
+            Share Link
+          </button>
         </div>
       </div>
       <CodeEditor
@@ -74,11 +123,15 @@ const Editor = () => {
         language={language}
         theme={isDarkMode ? 'vs-dark' : 'vs-light'}
         options={{ fontSize: 16 }}
-        defaultValue={inputCode}
+        value={inputCode}
         onChange={(val) => setInputCode(val)}
       />
     </div>
   );
+};
+
+Editor.propTypes = {
+  codeSnippetId: PropTypes.string.isRequired,
 };
 
 export default Editor;
