@@ -1,6 +1,6 @@
 const LINKS = [
   {
-    url: 'http://akul.codes',
+    url: 'http://akulsrivastava.com',
     img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Globe_icon.svg/600px-Globe_icon.svg.png',
     alt: 'website',
   },
